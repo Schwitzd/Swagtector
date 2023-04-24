@@ -13,26 +13,26 @@ class SwaggerDetector:
             endpoints = e.read().splitlines()
         return endpoints
 
-    def __get_response_title(self, url, endpoint):
+    def __get_response_title(self, endpoint):
         try:
-            response = httpx.get(f"{url}/{endpoint}", verify=False)
+            response = httpx.get(f"{self.url}/{endpoint}", verify=False)
             tree = html.fromstring(response.content)
-            title = tree.find(".//title").text
+            title = tree.find('.//title').text
         except Exception:
             response = None
             title = None
         return response, title
 
-    def __detect_swagger(self, url):
+    def __detect_swagger(self):
         for endpoint in self.endpoints:
-            response, title = self.__get_response_title(url, endpoint)
-            if title and "Swagger" in title:
+            response, title = self.__get_response_title(endpoint)
+            if title and 'Swagger' in title:
                 print(
-                    colored(f"[+] Swagger UI detected at {url}/{endpoint}", 'green'))
+                    colored(f"[+] Swagger UI detected at {self.url}/{endpoint}", 'green'))
                 if self.output:
-                    with open(self.output, "a") as file:
-                        file.write(f"{url}/{endpoint}\n")
+                    with open(self.output, 'a') as file:
+                        file.write(f"{self.url}/{endpoint}\n")
                 break
 
     def run(self):
-        self.__detect_swagger(self.url)
+        self.__detect_swagger()
