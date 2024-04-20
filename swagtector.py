@@ -8,18 +8,26 @@ print('''
   \___ \  \ \/  \/ / /\ \| | |_ |  | |  |  __|| |       | | | |  | |  _  / 
   ____) |  \  /\  / ____ \ |__| |  | |  | |___| |____   | | | |__| | | \ \ 
  |_____/    \/  \/_/    \_\_____|  |_|  |______\_____|  |_|  \____/|_|  \_\                                                           
-                                                                     v1.0.1              
+                                                                     v1.0.2              
 ''')
 
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-u', '--url', dest='url',
-                        help="Url to scan.")
-    parser.add_argument('-f', '--file', dest='file',
-                        help='File to scan')
-    parser.add_argument('-o', '--output', dest='output',
-                        help='Save the result to a file')
+    parser.add_argument(
+        '-U', '--url', dest='url',
+        help="Url to scan."
+    )
+
+    parser.add_argument(
+        '-F', '--file', dest='file',
+        help='File to scan'
+    )
+
+    parser.add_argument(
+        '-O', '--output', dest='output',
+        help='Save the result to a file'
+    )
 
     args = parser.parse_args()
     if not (args.url or args.file):
